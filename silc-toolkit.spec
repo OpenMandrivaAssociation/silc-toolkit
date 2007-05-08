@@ -1,5 +1,5 @@
 %define version 1.0.2
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define api_version 1.0
 %define silcmajor 2
@@ -112,7 +112,7 @@ This package contains all development related files for developing or
 compiling applications using SILC protocol.
 
 %package -n perl-silc
-Group: Development/perl
+Group: Development/Perl
 Summary: Perl part of the SILC toolkit
 
 %description -n perl-silc
