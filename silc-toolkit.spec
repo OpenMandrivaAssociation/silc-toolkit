@@ -20,9 +20,9 @@ Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source:		http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: perl-devel
-BuildRequires: glib2-devel
-BuildRequires: libncurses-devel
+#BuildRequires: perl-devel
+#BuildRequires: glib2-devel
+#BuildRequires: libncurses-devel
 Requires:	%{silclibname} = %{version}
 
 %description
@@ -47,6 +47,7 @@ Provides:	%{silclibname_orig} = %{version}-%{release}
 Obsoletes:	%{_lib}client1
 Provides:	%{_lib}client1 = %{version}-%{release}
 Requires:	%{name} = %{version}
+Obsoletes:	%mklibname silc- 1.0 %{silcmajor}
 
 %description	-n %{silclibname}
 SILC (Secure Internet Live Conferencing) is a protocol which provides
@@ -68,7 +69,7 @@ Provides:	%{name} = %{version}-%{release}
 Provides:	%{clientlibname_orig} = %{version}-%{release}
 Obsoletes:	%{_lib}silc-client1
 Provides:	%{_lib}silc-client1 = %{version}-%{release}
-Conflicts: %mklibname silcclient- %{api_version} 2
+Obsoletes:	%mklibname silcclient- 1.0 1
 
 %description	-n %{clientlibname}
 SILC (Secure Internet Live Conferencing) is a protocol which provides
