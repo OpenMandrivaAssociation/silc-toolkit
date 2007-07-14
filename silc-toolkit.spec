@@ -1,9 +1,9 @@
-%define version 1.0.2
-%define release %mkrel 2
+%define version 1.1.2
+%define release %mkrel 1
 
-%define api_version 1.0
+%define api_version 1.1
 %define silcmajor 2
-%define clientmajor 1
+%define clientmajor 2
 %define silclibname %mklibname silc- %{api_version} %{silcmajor}
 %define silclibname_orig %mklibname silc- %{api_version}
 %define clientlibname %mklibname silcclient- %{api_version} %{clientmajor}
@@ -21,7 +21,7 @@ URL:		http://silcnet.org/
 Source:		http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: perl-devel
-BuildRequires: glib-devel
+BuildRequires: glib2-devel
 BuildRequires: libncurses-devel
 Requires:	%{silclibname} = %{version}
 
@@ -144,30 +144,29 @@ find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 	--with-perl-lib=vendor \
 	--without-silcd \
 	--without-irssi \
-        --with-helpdir=%_datadir/silc/help \
 	--includedir=%{_includedir}/silc
 
 # parallel will succeed but produce broken library
 make
 
 %install
-rm -rf %{buildroot} package-doc
+rm -rf %{buildroot}
 %makeinstall_std
-mv %buildroot%buildroot%_datadir/silc/help %buildroot%_datadir/silc/
+# mv %buildroot%buildroot%_datadir/silc/help %buildroot%_datadir/silc/
 
 # let rpm macros handle documents
-rm -rf package-doc
-mv %{buildroot}%{_prefix}/doc package-doc
-mv %{buildroot}%buildroot%{_prefix}/doc/* package-doc
-mkdir -p package-doc/tutorial
-install -m 644 tutorial/mybot/{README,mybot.c} package-doc/tutorial/
+# rm -rf package-doc
+# mv %{buildroot}%{_prefix}/doc package-doc
+# mv %{buildroot}%buildroot%{_prefix}/doc/* package-doc
+# mkdir -p package-doc/tutorial
+# install -m 644 tutorial/mybot/{README,mybot.c} package-doc/tutorial/
 
 # remove files not bundled
-rm -rf %{buildroot}%{_sysconfdir}
-rm -rf %{buildroot}%{_mandir}
+# rm -rf %{buildroot}%{_sysconfdir}
+# rm -rf %{buildroot}%{_mandir}
 
 # multiarch
-%multiarch_includes %{buildroot}%{_includedir}/silc/silcincludes.h
+# multiarch_includes %{buildroot}%{_includedir}/silc/silcincludes.h
 
 
 %post -n %{silclibname} -p /sbin/ldconfig
@@ -185,10 +184,10 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%_bindir/silc
+#%_bindir/silc
 %{_libdir}/silc
-%_datadir/silc
-%_sbindir/silcd
+#%_datadir/silc
+#%_sbindir/silcd
 
 %files -n %{silclibname}
 %defattr(-,root,root)
@@ -200,9 +199,9 @@ rm -rf %{buildroot}
 
 %files devel
 %defattr(-,root,root)
-%doc package-doc/*
+%doc %{_docdir}/%{name}
 %{_includedir}/silc
-%multiarch %{multiarch_includedir}/silc/*.h
+# multiarch %{multiarch_includedir}/silc/*.h
 %{_libdir}/lib*.so
 %{_libdir}/lib*.a
 %{_libdir}/lib*.la
@@ -210,6 +209,4 @@ rm -rf %{buildroot}
 
 %files -n perl-silc
 %defattr(-,root,root)
-%{perl_vendorarch}/*
-
-
+#%{perl_vendorarch}/*
