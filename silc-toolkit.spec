@@ -112,25 +112,6 @@ different compared to IRC.
 This package contains all development related files for developing or 
 compiling applications using SILC protocol.
 
-
-%package -n perl-silc-client
-Group: Development/Perl
-Summary: Perl part of the SILC toolkit
-Obsoletes: perl-silc
-Provides: perl-silc = %{version}-%{devel}
-
-%description -n perl-silc-client
-SILC (Secure Internet Live Conferencing) is a protocol which provides
-secure conferencing services on the Internet over insecure channel.
-SILC is IRC-like software although internally they are very different.
-The biggest similarity between SILC and IRC is that they both provide
-conferencing services and that SILC has almost the same commands as IRC.
-Other than that they are nothing alike.  Major differences are that SILC
-is secure what IRC is not in any way.  The network model is also entirely
-different compared to IRC.
-
-This contains the perl modules that come with SILC.
-
 %prep
 %setup -q
 
