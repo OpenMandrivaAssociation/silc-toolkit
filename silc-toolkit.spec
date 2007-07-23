@@ -1,5 +1,5 @@
 %define version 1.1.2
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define api_version 1.1
 %define silcmajor 2
@@ -8,8 +8,6 @@
 %define silclibname_orig %mklibname silc- %{api_version}
 %define clientlibname %mklibname silcclient- %{api_version} %{clientmajor}
 %define clientlibname_orig %mklibname silcclient- %{api_version}
-
-%define silclibdir %{_libdir}/silc
 
 Summary:	SILC toolkit
 Name:		silc-toolkit
@@ -20,9 +18,6 @@ Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source:		http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-#BuildRequires: perl-devel
-#BuildRequires: glib2-devel
-#BuildRequires: libncurses-devel
 Requires:	%{silclibname} = %{version}
 
 %description
@@ -42,10 +37,7 @@ has SILC support.
 %package	-n %{silclibname}
 Summary:	SILC library
 Group:		System/Libraries
-Provides:	%{name} = %{version}-%{release}
 Provides:	%{silclibname_orig} = %{version}-%{release}
-Obsoletes:	%{_lib}client1
-Provides:	%{_lib}client1 = %{version}-%{release}
 Requires:	%{name} = %{version}
 Obsoletes:	%mklibname silc- 1.0 %{silcmajor}
 
@@ -65,7 +57,6 @@ cryptographic algorithms and utility functions.
 %package	-n %{clientlibname}
 Summary:	SILC client library
 Group:		System/Libraries
-Provides:	%{name} = %{version}-%{release}
 Provides:	%{clientlibname_orig} = %{version}-%{release}
 Obsoletes:	%{_lib}silc-client1
 Provides:	%{_lib}silc-client1 = %{version}-%{release}
@@ -119,8 +110,8 @@ find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 
 %build
 %configure2_5x \
-	--with-logsdir=%{_var}/log/silc \
-	--with-simdir=%{silclibdir}/modules \
+	--with-logsdir=%{_logdir}/silc \
+	--with-simdir=%{_libdir}/silc/modules \
 	--with-silcd-pid-file=%{_var}/run/silcd.pid \
 	--enable-ipv6 \
 	--enable-shared \
@@ -136,22 +127,6 @@ make
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-# mv %buildroot%buildroot%_datadir/silc/help %buildroot%_datadir/silc/
-
-# let rpm macros handle documents
-# rm -rf package-doc
-# mv %{buildroot}%{_prefix}/doc package-doc
-# mv %{buildroot}%buildroot%{_prefix}/doc/* package-doc
-# mkdir -p package-doc/tutorial
-# install -m 644 tutorial/mybot/{README,mybot.c} package-doc/tutorial/
-
-# remove files not bundled
-# rm -rf %{buildroot}%{_sysconfdir}
-# rm -rf %{buildroot}%{_mandir}
-
-# multiarch
-# multiarch_includes %{buildroot}%{_includedir}/silc/silcincludes.h
-
 
 %post -n %{silclibname} -p /sbin/ldconfig
 %postun -n %{silclibname} -p /sbin/ldconfig
@@ -168,6 +143,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
+%doc COPYING README* CHANGES TODO
 %{_libdir}/silc
 
 %files -n %{silclibname}
@@ -182,7 +158,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %doc %{_docdir}/%{name}
 %{_includedir}/silc
-# multiarch %{multiarch_includedir}/silc/*.h
 %{_libdir}/lib*.so
 %{_libdir}/lib*.a
 %{_libdir}/lib*.la
