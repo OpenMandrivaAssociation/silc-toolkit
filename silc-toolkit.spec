@@ -1,13 +1,13 @@
 %define version 1.1.3
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define api_version 1.1
 %define silcmajor 2
 %define clientmajor 2
-%define silclibname %mklibname silc- %{api_version} %{silcmajor}
-%define silclibname_orig %mklibname silc- %{api_version}
-%define clientlibname %mklibname silcclient- %{api_version} %{clientmajor}
-%define clientlibname_orig %mklibname silcclient- %{api_version}
+%define silclibname %mklibname silc %{api_version} %{silcmajor}
+%define silclibname_orig %mklibname silc %{api_version}
+%define clientlibname %mklibname silcclient %{api_version} %{clientmajor}
+%define clientlibname_orig %mklibname silcclient %{api_version}
 
 Summary:	SILC toolkit
 Name:		silc-toolkit
@@ -40,6 +40,7 @@ Group:		System/Libraries
 Provides:	%{silclibname_orig} = %{version}-%{release}
 Requires:	%{name} = %{version}
 Obsoletes:	%mklibname silc- 1.0 %{silcmajor}
+Obsoletes:	%mklibname silc- 1.1 2
 
 %description	-n %{silclibname}
 SILC (Secure Internet Live Conferencing) is a protocol which provides
@@ -61,6 +62,7 @@ Provides:	%{clientlibname_orig} = %{version}-%{release}
 Obsoletes:	%{_lib}silc-client1
 Provides:	%{_lib}silc-client1 = %{version}-%{release}
 Obsoletes:	%mklibname silcclient- 1.0 1
+Obsoletes:	%mklibname silcclient- 1.1 2
 
 %description	-n %{clientlibname}
 SILC (Secure Internet Live Conferencing) is a protocol which provides
