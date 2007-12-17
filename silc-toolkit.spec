@@ -17,7 +17,6 @@ License:	LGPL
 Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source:		http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires:	%{silclibname} = %{version}
 
 %description
