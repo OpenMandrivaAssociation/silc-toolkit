@@ -1,6 +1,3 @@
-%define version 1.1.5
-%define release %mkrel 1
-
 %define api_version 1.1
 %define silcmajor 2
 %define clientmajor 2
@@ -11,14 +8,21 @@
 
 Summary:	SILC toolkit
 Name:		silc-toolkit
-Version:	%{version}
-Release:	%{release}
+Version:	1.1.6
+Release:	%mkrel 1
 License:	LGPL
 Group:		Networking/Chat
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://silcnet.org/
-Source:		http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
+Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
+Patch0:		silc-toolkit-1.1-wordsize.patch
+Patch1:		silc-toolkit-1.1.5-libidn.patch
+Patch2:		silc-toolkit-1.1.5-docinst.patch
 Requires:	%{silclibname} = %{version}
+BuildRequires:	libidn-devel
+BuildRequires:	libtool
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 SILC (Secure Internet Live Conferencing) is a protocol which provides
@@ -32,7 +36,6 @@ different compared to IRC.
 
 This package provides development related files for any application that
 has SILC support.
-
 
 %package	-n %{silclibname}
 Summary:	SILC library
@@ -107,10 +110,15 @@ compiling applications using SILC protocol.
 
 %prep
 %setup -q
+%patch0 -p1 -b .wordsize
+%patch1 -p1 -b .libidn
+%patch2 -p1 -b .docinst
 
 find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 
 %build
+autoreconf
+
 %configure2_5x \
 	--with-logsdir=%{_logdir}/silc \
 	--with-simdir=%{_libdir}/silc/modules \
@@ -128,11 +136,15 @@ make
 
 %install
 rm -rf %{buildroot}
+
 %makeinstall_std
 
 %post -n %{silclibname} -p /sbin/ldconfig
+
 %postun -n %{silclibname} -p /sbin/ldconfig
+
 %post -n %{clientlibname} -p /sbin/ldconfig
+
 %postun -n %{clientlibname} -p /sbin/ldconfig
 
 %triggerpostun -- libsilc-client1 <= 1.0.1-2mdk
