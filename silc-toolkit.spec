@@ -9,12 +9,11 @@
 Summary:	SILC toolkit
 Name:		silc-toolkit
 Version:	1.1.7
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	LGPL
 Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
-Patch0:		silc-toolkit-1.1-wordsize.patch
 Patch1:		silc-toolkit-1.1.5-libidn.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
 Requires:	%{silclibname} = %{version}
@@ -110,7 +109,6 @@ compiling applications using SILC protocol.
 
 %prep
 %setup -q
-%patch0 -p1 -b .wordsize
 %patch1 -p1 -b .libidn
 %patch2 -p1 -b .docinst
 
