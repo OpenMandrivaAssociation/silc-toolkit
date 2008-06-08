@@ -10,17 +10,19 @@ Summary:	SILC toolkit
 Name:		silc-toolkit
 Version:	1.1.7
 Release:	%mkrel 2
-License:	LGPL
+License:	GPLv2
 Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
 Patch1:		silc-toolkit-1.1.5-libidn.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
-Requires:	%{silclibname} = %{version}
+Requires:	%{silclibname} = %{version}-%{release}
 BuildRequires:	libidn-devel
 BuildRequires:	libtool
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	ncurses-devel
+BuildRequires:	nasm
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -36,15 +38,15 @@ different compared to IRC.
 This package provides development related files for any application that
 has SILC support.
 
-%package	-n %{silclibname}
+%package -n %{silclibname}
 Summary:	SILC library
 Group:		System/Libraries
 Provides:	%{silclibname_orig} = %{version}-%{release}
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	%mklibname silc- 1.0 %{silcmajor}
 Obsoletes:	%mklibname silc- 1.1 2
 
-%description	-n %{silclibname}
+%description -n %{silclibname}
 SILC (Secure Internet Live Conferencing) is a protocol which provides
 secure conferencing services on the Internet over insecure channel.
 SILC is IRC-like software although internally they are very different.
@@ -57,7 +59,7 @@ different compared to IRC.
 This is the library implementing SILC protocol, including core components,
 cryptographic algorithms and utility functions.
 
-%package	-n %{clientlibname}
+%package -n %{clientlibname}
 Summary:	SILC client library
 Group:		System/Libraries
 Provides:	%{clientlibname_orig} = %{version}-%{release}
@@ -66,7 +68,7 @@ Provides:	%{_lib}silc-client1 = %{version}-%{release}
 Obsoletes:	%mklibname silcclient- 1.0 1
 Obsoletes:	%mklibname silcclient- 1.1 2
 
-%description	-n %{clientlibname}
+%description -n %{clientlibname}
 SILC (Secure Internet Live Conferencing) is a protocol which provides
 secure conferencing services on the Internet over insecure channel.
 SILC is IRC-like software although internally they are very different.
@@ -80,21 +82,21 @@ The SILC Client library. Implementation of the SILC Client without
 the user interface.  The library provides an interface for user
 interface designers.
 
-%package	devel
+%package devel
 Summary:	SILC toolkit
 Group:		Development/Other
 # rpmlint wants that, so be it
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Provides:	%{clientlibname_orig}-devel = %{version}-%{release}
-Requires:	%{clientlibname} = %{version}
+Requires:	%{clientlibname} = %{version}-%{release}
 Provides:	%{silclibname_orig}-devel = %{version}-%{release}
-Requires:	%{silclibname} = %{version}
+Requires:	%{silclibname} = %{version}-%{release}
 Obsoletes:	%{_lib}client1-devel
 Provides:	%{_lib}client1-devel = %{version}-%{release}
 Obsoletes:	%{_lib}silc-client1-devel
 Provides:	%{_lib}silc-client1-devel = %{version}-%{release}
 
-%description	devel
+%description devel
 SILC (Secure Internet Live Conferencing) is a protocol which provides
 secure conferencing services on the Internet over insecure channel.
 SILC is IRC-like software although internally they are very different.
@@ -116,21 +118,16 @@ find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 
 %build
 autoreconf
+%define _disable_ld_no_undefined 1
 
 %configure2_5x \
-	--with-logsdir=%{_logdir}/silc \
 	--with-simdir=%{_libdir}/silc/modules \
-	--with-silcd-pid-file=%{_var}/run/silcd.pid \
 	--enable-ipv6 \
 	--enable-shared \
-	--with-perl=module \
-	--with-perl-lib=vendor \
-	--without-silcd \
-	--without-irssi \
 	--includedir=%{_includedir}/silc
 
 # parallel will succeed but produce broken library
-make
+%make -j1
 
 %install
 rm -rf %{buildroot}
@@ -155,7 +152,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc COPYING README* CHANGES TODO
+%doc README* CHANGES TODO
 %{_libdir}/silc
 
 %files -n %{silclibname}
