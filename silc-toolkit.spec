@@ -134,13 +134,21 @@ rm -rf %{buildroot}
 
 %makeinstall_std
 
+%if %mdkversion < 200900
 %post -n %{silclibname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{silclibname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %post -n %{clientlibname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{clientlibname} -p /sbin/ldconfig
+%endif
 
 %triggerpostun -- libsilc-client1 <= 1.0.1-2mdk
 tempfile=`mktemp /etc/ld.so.conf.XXXXXX` || exit $?
