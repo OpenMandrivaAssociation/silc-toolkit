@@ -160,7 +160,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc README* CHANGES TODO
+%doc README* ChangeLog TODO
 %{_libdir}/silc
 
 %files -n %{silclibname}
