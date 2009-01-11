@@ -127,7 +127,7 @@ autoreconf
 	--includedir=%{_includedir}/silc
 
 # parallel will succeed but produce broken library
-%make -j1
+%make -j1 LIBTOOL=%_bindir/libtool
 
 %install
 rm -rf %{buildroot}
