@@ -8,7 +8,7 @@
 
 Summary:	SILC toolkit
 Name:		silc-toolkit
-Version:	1.1.8
+Version:	1.1.9
 Release:	%mkrel 1
 License:	GPLv2
 Group:		Networking/Chat
