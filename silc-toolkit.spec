@@ -132,7 +132,7 @@ autoreconf
 %install
 rm -rf %{buildroot}
 
-%makeinstall_std
+%makeinstall_std LIBTOOL=%_bindir/libtool
 
 %if %mdkversion < 200900
 %post -n %{silclibname} -p /sbin/ldconfig
