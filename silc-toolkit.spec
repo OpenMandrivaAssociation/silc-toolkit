@@ -1,6 +1,6 @@
 %define api_version 1.1
 %define silcmajor 2
-%define clientmajor 2
+%define clientmajor 3
 %define silclibname %mklibname silc %{api_version} %{silcmajor}
 %define silclibname_orig %mklibname silc %{api_version}
 %define clientlibname %mklibname silcclient %{api_version} %{clientmajor}
