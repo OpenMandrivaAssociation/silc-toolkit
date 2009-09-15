@@ -8,12 +8,12 @@
 
 Summary:	SILC toolkit
 Name:		silc-toolkit
-Version:	1.1.9
-Release:	%mkrel 2
+Version:	1.1.10
+Release:	%mkrel 1
 License:	GPLv2
 Group:		Networking/Chat
 URL:		http://silcnet.org/
-Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.bz2
+Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.gz
 Patch1:		silc-toolkit-1.1.5-libidn.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
 Requires:	%{silclibname} = %{version}-%{release}
