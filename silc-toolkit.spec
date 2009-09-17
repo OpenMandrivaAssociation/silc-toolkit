@@ -9,15 +9,15 @@
 Summary:	SILC toolkit
 Name:		silc-toolkit
 Version:	1.1.10
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2
 Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.gz
-Patch1:		silc-toolkit-1.1.5-libidn.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
+#gw fix linking, link libsilc with pthread and dl, link silcclient with silc
+Patch3:		silc-toolkit-1.1.10-fix-linking.patch
 Requires:	%{silclibname} = %{version}-%{release}
-BuildRequires:	libidn-devel
 BuildRequires:	libtool
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -111,14 +111,13 @@ compiling applications using SILC protocol.
 
 %prep
 %setup -q
-%patch1 -p1 -b .libidn
 %patch2 -p1 -b .docinst
+%patch3 -p1
 
 find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
+autoreconf -fi
 
 %build
-autoreconf
-%define _disable_ld_no_undefined 1
 
 %configure2_5x \
 	--with-simdir=%{_libdir}/silc/modules \
