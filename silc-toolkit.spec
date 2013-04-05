@@ -106,7 +106,7 @@ compiling applications using SILC protocol.
 %patch2 -p1 -b .docinst
 %patch3 -p1
 
-find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
+#find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 autoreconf -fi
 
 %build
