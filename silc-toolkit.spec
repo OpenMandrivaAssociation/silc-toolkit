@@ -9,7 +9,7 @@
 Summary:	SILC toolkit
 Name:		silc-toolkit
 Version:	1.1.10
-Release:	12
+Release:	13
 License:	GPLv2
 Group:		Networking/Chat
 URL:		http://silcnet.org/
