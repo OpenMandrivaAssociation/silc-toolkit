@@ -1,6 +1,6 @@
 %define api_version 1.1
-%define silcmajor 2
-%define clientmajor 3
+%define silcmajor 4
+%define clientmajor 4
 %define silclibname %mklibname silc %{api_version} %{silcmajor}
 %define silclibname_orig %mklibname silc %{api_version}
 %define clientlibname %mklibname silcclient %{api_version} %{clientmajor}
@@ -8,15 +8,14 @@
 
 Summary:	SILC toolkit
 Name:		silc-toolkit
-Version:	1.1.10
-Release:	14
+Version:	1.1.12
+Release:	1
 License:	GPLv2
 Group:		Networking/Chat
 URL:		http://silcnet.org/
 Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.gz
+Patch1:		silc-toolkit-1.1.12-clang.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
-#gw fix linking, link libsilc with pthread and dl, link silcclient with silc
-Patch3:		silc-toolkit-1.1.10-fix-linking.patch
 Requires:	%{silclibname} = %{version}-%{release}
 BuildRequires:	libtool
 BuildRequires:	autoconf
@@ -103,15 +102,14 @@ compiling applications using SILC protocol.
 
 %prep
 %setup -q
-%patch2 -p1 -b .docinst
-%patch3 -p1
+%apply_patches
 
 #find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 autoreconf -fi
 
 %build
 
-%configure2_5x \
+%configure \
 	--with-simdir=%{_libdir}/silc/modules \
 	--enable-ipv6 \
 	--enable-shared \

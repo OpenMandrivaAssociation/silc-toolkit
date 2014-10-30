@@ -1,2 +1,4 @@
+removed_sources:
+  silc-toolkit-1.1.10.tar.gz: 526ee5783c06bfb8be9d436de52c16d3843eae6e
 sources:
-  "silc-toolkit-1.1.10.tar.gz": 526ee5783c06bfb8be9d436de52c16d3843eae6e
+  silc-toolkit-1.1.12.tar.gz: f2b527406d91de296ae0f33ddf9becb45c803a22

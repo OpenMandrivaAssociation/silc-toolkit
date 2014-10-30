@@ -1,0 +1,18 @@
+--- a/configure.ac.orig	2014-10-29 23:57:36.866600053 +0000
++++ b/configure.ac	2014-10-29 23:57:50.532599046 +0000
+@@ -511,7 +511,6 @@
+   else
+     SILC_ADD_CFLAGS(-g)
+   fi
+-  SILC_ADD_CFLAGS(-Wall -finline-functions)
+   SILC_ADD_CFLAGS(-Wno-pointer-sign)
+ else
+   # Other compilers
+@@ -1312,7 +1311,6 @@
+ esac
+ fi
+ 
+-SILC_ADD_CC_FLAGS(SILC_CRYPTO, -fno-regmove)
+ if test x$summary_debug = xno -a x$want_cc_optimizations = xtrue; then
+   SILC_ADD_CC_FLAGS(SILC_CRYPTO, -fomit-frame-pointer -O3)
+ fi
