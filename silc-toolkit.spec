@@ -6,10 +6,13 @@
 %define clientlibname %mklibname silcclient %{api_version} %{clientmajor}
 %define clientlibname_orig %mklibname silcclient %{api_version}
 
+%define _disable_rebuild_configure 1
+%define _disable_lto 1
+
 Summary:	SILC toolkit
 Name:		silc-toolkit
 Version:	1.1.12
-Release:	4
+Release:	5
 License:	GPLv2
 Group:		Networking/Chat
 URL:		http://silcnet.org/
