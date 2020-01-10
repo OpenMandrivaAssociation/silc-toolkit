@@ -105,7 +105,7 @@ compiling applications using SILC protocol.
 
 %prep
 %setup -q
-%apply_patches
+%autopatch -p1
 
 #find -type f | xargs file | grep -v script | cut -d: -f1 | xargs chmod -x
 autoreconf -fi
