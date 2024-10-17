@@ -15,7 +15,7 @@ Version:	1.1.12
 Release:	8
 License:	GPLv2
 Group:		Networking/Chat
-URL:		http://silcnet.org/
+URL:		https://silcnet.org/
 Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.gz
 Patch1:		silc-toolkit-1.1.12-clang.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
