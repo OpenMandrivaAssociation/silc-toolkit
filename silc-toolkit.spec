@@ -20,6 +20,8 @@ Source0:	http://silcnet.org/download/toolkit/sources/%{name}-%{version}.tar.gz
 Patch1:		silc-toolkit-1.1.12-clang.patch
 Patch2:		silc-toolkit-1.1.5-docinst.patch
 Requires:	%{silclibname} = %{version}-%{release}
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	libtool
 BuildRequires:	autoconf
 BuildRequires:	automake
